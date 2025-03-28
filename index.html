@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>刮刮乐</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        #scratchCanvas {
+            width: 100%;
+            height: auto;
+            max-width: 300px;
+            margin: 0 auto;
+            background-color: #fff;
+            border: 1px solid #ccc;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+            #scratchCanvas {
+                max-width: 100%;
+            }
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            button {
+                margin: 5px 0;
+            }
+        }
+    </style>
+    <!-- 引入微信JS-SDK -->
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>刮刮乐</h1>
+        <canvas id="scratchCanvas" width="300" height="100"></canvas>
+        <div class="controls">
+            <button id="newCard">新卡片</button>
+            <button id="shareBtn">分享给好友</button>
+        </div>
+    </div>
+    <script src="../js/scratch.js"></script>
+    <script>
+        // 配置微信JS-SDK
+        function initWeChatConfig() {
+            // 这里需要替换为你的测试号配置信息
+            const config = {
+                debug: true, // 开启调试模式，方便查看错误信息
+                appId: 'YOUR_TEST_APP_ID', // 替换为你的测试号 AppID
+                timestamp: Math.floor(Date.now() / 1000), // 当前时间戳
+                nonceStr: 'test_nonce_str', // 随机字符串
+                signature: 'test_signature', // 签名（需要后端生成）
+                jsApiList: [
+                    'updateAppMessageShareData',
+                    'updateTimelineShareData'
+                ]
+            };
+
+            // 调用微信配置
+            wx.config(config);
+
+            // 注册配置成功事件
+            wx.ready(function() {
+                console.log('微信JS-SDK配置成功');
+            });
+
+            // 注册配置失败事件
+            wx.error(function(res) {
+                console.error('微信JS-SDK配置失败', res);
+            });
+        }
+
+        // 页面加载完成后初始化微信配置
+        window.addEventListener('load', initWeChatConfig);
+    </script>
+</body>
+</html> 
